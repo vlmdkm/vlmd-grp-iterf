@@ -1,0 +1,1817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IT Equipment Release Form</title>
+<link rel="icon" id="faviconLink" type="image/png" href="">
+<style>
+  :root{
+    --navy:#043E70;
+    --navy-light:#0B5FA0;
+    --navy-dark:#022A4E;
+    --teal:#4ABDAC;
+    --teal-dark:#379485;
+    --cyan:#8FE0D3;
+    --teal-tint:#E7F7F4;
+    --bg:#F2F6F8;
+    --card:#FFFFFF;
+    --text-dark:#1A2430;
+    --text-muted:#5B6472;
+    --amber:#B45309;
+    --amber-bg:#FEF3E2;
+    --green:#107C41;
+    --green-bg:#E6F4EC;
+    --red:#C0392B;
+    --border:#E3E8ED;
+    --shadow-sm:0 1px 2px rgba(4,62,112,.06);
+    --shadow-md:0 10px 28px -14px rgba(4,62,112,.22);
+    --radius:10px;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0; padding:0;
+    font-family:"Segoe UI Variable Text", "Segoe UI", Calibri, Arial, sans-serif;
+    background:var(--bg);
+    color:var(--text-dark);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{ font-family:"Segoe UI Semibold", "Segoe UI", Calibri, Arial, sans-serif; font-weight:600; letter-spacing:-.1px; }
+
+  .page{ max-width:940px; margin:0 auto; padding:44px 48px 72px; }
+
+  /* ---------------- HEADER ---------------- */
+  .header{
+    display:flex; align-items:center; gap:20px;
+    padding:24px 28px 28px; margin:-44px -48px 34px;
+    background:var(--card);
+    border-bottom:none;
+    border-radius:0 0 var(--radius) var(--radius);
+    box-shadow:var(--shadow-sm);
+    position:relative;
+  }
+  .header::after{
+    content:""; position:absolute; left:0; right:0; bottom:-4px; height:4px;
+    background:linear-gradient(90deg, var(--navy), var(--teal));
+    border-radius:0 0 var(--radius) var(--radius);
+  }
+  .brand-badge{
+    width:52px; height:52px; border-radius:12px;
+    background:transparent;
+    color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-size:20px; flex:none; overflow:hidden;
+  }
+  .brand-badge:not(:has(img)){
+    background:linear-gradient(135deg, var(--navy), var(--navy-light));
+    box-shadow:var(--shadow-sm);
+  }
+  .brand-badge img{ width:100%; height:100%; object-fit:contain; }
+  .header-text h1{ margin:0; font-size:22px; color:var(--navy); }
+  .header-text p{ margin:5px 0 0; font-size:13px; color:var(--text-muted); }
+  .header-meta{ margin-left:auto; text-align:right; font-size:12px; color:var(--text-muted); font-family:"Cascadia Code", "Courier New", monospace; line-height:1.7; }
+
+  /* ---------------- SYNC NOTE ---------------- */
+  .sync-note{
+    font-family:"Cascadia Code", "Courier New", monospace; font-size:11px; padding:9px 16px; border-radius:20px;
+    margin-bottom:26px; display:inline-block;
+    background:var(--amber-bg); color:var(--amber); border:1px solid #F3D9B1;
+  }
+  .sync-note.on{ background:var(--green-bg); color:var(--green); border-color:#BFE6D2; }
+
+  /* ---------------- STEPPER ---------------- */
+  .stepper{
+    display:flex; align-items:flex-start; justify-content:space-between;
+    margin-bottom:36px; padding:0 4px;
+  }
+  .step-item{
+    display:flex; flex-direction:column; align-items:center; gap:10px;
+    flex:1; position:relative; cursor:default; text-align:center;
+  }
+  .step-item.clickable{ cursor:pointer; }
+  .step-circle{
+    width:34px; height:34px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px; font-weight:600; font-family:"Segoe UI", Calibri, sans-serif;
+    background:#fff; border:2px solid var(--border); color:var(--text-muted);
+    transition:all .15s ease;
+  }
+  .step-item.current .step-circle{ border-color:var(--navy); background:var(--navy); color:#fff; box-shadow:0 0 0 4px rgba(4,62,112,.12); }
+  .step-item.done .step-circle{ border-color:var(--teal); background:var(--teal); color:#fff; }
+  .step-label{ font-size:11.5px; color:var(--text-muted); font-weight:600; letter-spacing:.2px; max-width:110px; }
+  .step-item.current .step-label{ color:var(--navy); }
+  .step-item.done .step-label{ color:var(--text-dark); }
+  .step-track{
+    position:absolute; top:17px; left:calc(-50% + 17px); right:calc(50% + 17px);
+    height:2px; background:var(--border); z-index:0;
+  }
+  .step-item:first-child .step-track{ display:none; }
+  .step-item.done .step-track, .step-item.current .step-track{ background:var(--teal); }
+  .step-circle{ position:relative; z-index:1; }
+
+  /* ---------------- CARDS ---------------- */
+  .card{
+    background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+    padding:30px 34px; margin-bottom:28px;
+    box-shadow:var(--shadow-sm);
+  }
+  .card h2{ margin:0 0 8px; font-size:16px; color:var(--navy); display:flex; align-items:center; gap:8px; }
+  .card h2 .icon{ font-size:17px; }
+  .card-subtitle{ font-size:12.5px; color:var(--text-muted); margin:0 0 22px; }
+
+  .field-grid{ display:grid; grid-template-columns:1fr 1fr; gap:20px 24px; }
+  .field{ display:flex; flex-direction:column; }
+  .field.full{ grid-column:1 / -1; }
+  .field label{ font-size:12px; color:var(--text-muted); margin-bottom:7px; font-weight:600; letter-spacing:.2px; }
+  .field input, .field select{
+    padding:11px 13px; border:1.5px solid var(--border); border-radius:6px;
+    font-size:13.5px; font-family:"Segoe UI", Calibri, sans-serif; background:#fff;
+    transition:border-color .12s ease, box-shadow .12s ease;
+  }
+  .field input:focus, .field select:focus{ outline:none; border-color:var(--teal); box-shadow:0 0 0 3px rgba(74,189,172,.25); }
+  .field textarea{
+    padding:11px 13px; border:1.5px solid var(--border); border-radius:6px;
+    font-size:13.5px; font-family:"Segoe UI", Calibri, sans-serif; background:#fff;
+    transition:border-color .12s ease, box-shadow .12s ease; resize:vertical; min-height:64px; line-height:1.5;
+  }
+  .field textarea:focus{ outline:none; border-color:var(--teal); box-shadow:0 0 0 3px rgba(74,189,172,.25); }
+  .field-hint{ font-size:12px; color:var(--text-muted); font-style:italic; margin-top:8px; line-height:1.5; }
+  #itRemarks.equip-font, #reviewRemarks.equip-font{ font-family:"Segoe UI", Calibri, Arial, sans-serif; font-size:12px; }
+  .retry-inline-btn{
+    margin-left:8px; padding:3px 11px; font-size:11px; border-radius:5px; vertical-align:middle;
+  }
+  .remove-staff-btn{ padding:5px 12px; font-size:11.5px; color:var(--red); }
+  .remove-staff-btn:hover{ border-color:var(--red); color:var(--red); }
+  .asset-id-input{ font-family:"Cascadia Code", "Courier New", monospace; }
+  .field-status{ font-size:11px; margin-top:7px; min-height:14px; }
+  .field-status.ok{ color:var(--green); }
+  .field-status.err{ color:var(--red); }
+  .field-status.warn{ color:var(--amber); }
+
+  /* ---------------- BUTTONS ---------------- */
+  .btn{
+    padding:11px 22px; border-radius:6px; border:none; font-size:13.5px; font-weight:600;
+    cursor:pointer; font-family:"Segoe UI", Calibri, sans-serif; white-space:nowrap;
+    transition:background .12s ease, box-shadow .12s ease, transform .05s ease;
+  }
+  .btn-primary{ background:var(--navy); color:#fff; box-shadow:var(--shadow-sm); }
+  .btn-primary:hover{ background:var(--navy-light); }
+  .btn-primary:active{ transform:translateY(1px); }
+  .btn-primary:disabled{ background:#A9B4BE; cursor:not-allowed; box-shadow:none; }
+  .btn-ghost{ background:#fff; border:1.5px solid var(--border); color:var(--text-muted); }
+  .btn-ghost:hover{ border-color:var(--navy); color:var(--navy); }
+  .lookup-actions{ display:flex; align-items:center; gap:16px; margin-top:22px; }
+  .lookup-summary{ font-size:12.5px; color:var(--text-muted); }
+  .lookup-summary.ok{ color:var(--green); }
+  .lookup-summary.err{ color:var(--red); }
+  .lookup-summary.warn{ color:var(--amber); font-weight:600; }
+
+  /* ---------------- EQUIPMENT TABLE (single, unified, dynamic row count) ---------------- */
+  .equip-table{ width:100%; border-collapse:collapse; font-size:12px; font-family:"Segoe UI", Calibri, Arial, sans-serif; }
+  .equip-table th{
+    font-family:inherit; text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:.3px;
+    color:var(--navy); padding:12px 10px; border-bottom:2px solid var(--navy); background:var(--teal-tint);
+  }
+  .equip-table th:first-child{ border-radius:6px 0 0 0; }
+  .equip-table th:last-child{ border-radius:0 6px 0 0; }
+  .equip-table td{ font-family:inherit; padding:13px 10px; border-bottom:1px solid #EEF2F5; vertical-align:top; }
+  .equip-table td.item{ font-weight:600; color:var(--navy); white-space:nowrap; }
+  .equip-table td.assetid{ font-family:inherit; white-space:nowrap; }
+  .equip-table td.na{ font-family:inherit; color:#94A3B8; font-style:italic; }
+  .equip-empty{ font-size:12.5px; color:var(--text-muted); font-style:italic; padding:20px 0; text-align:center; }
+
+  /* ---------------- REVIEW (plain text, no field boxes) ---------------- */
+  .review-grid{ display:grid; grid-template-columns:1fr 1fr; gap:22px 28px; }
+  .review-field{ display:flex; flex-direction:column; gap:5px; }
+  .review-field.full{ grid-column:1 / -1; }
+  .review-label{ font-size:10.5px; text-transform:uppercase; letter-spacing:.3px; color:var(--text-muted); font-weight:600; }
+  .review-value{ font-size:14px; color:var(--text-dark); font-weight:600; padding-bottom:8px; border-bottom:1px solid var(--border); }
+  .review-value.empty{ color:#94A3B8; font-style:italic; font-weight:normal; }
+  .review-value.wrap{ white-space:pre-wrap; font-weight:normal; line-height:1.55; }
+
+  /* ---------------- ACK / SIGNATURES ---------------- */
+  .ack-text{ font-size:12.5px; color:var(--text-dark); line-height:1.75; margin:0 0 26px; }
+  .ack-text a{ color:var(--navy-light); }
+  .ack-text .policy-url{
+    display:block; margin-top:12px; padding:10px 12px;
+    font-family:"Cascadia Code", "Courier New", monospace; font-size:11px;
+    color:var(--navy); background:var(--teal-tint); border:1px solid var(--border);
+    border-radius:6px; word-break:break-all; line-height:1.6;
+  }
+
+  /* ---------------- PRINT / PDF FOOTER ---------------- */
+  .print-footer{
+    margin-top:26px; margin-bottom:28px; padding-top:12px;
+    font-size:10px; color:var(--text-muted); text-align:center; letter-spacing:.2px;
+  }
+  .sig-grid{ display:grid; grid-template-columns:1fr 1fr; gap:44px; margin-top:20px; }
+  .sig-name-block{ display:flex; align-items:flex-end; height:50px; }
+  .sig-name{ font-size:13px; font-weight:600; color:var(--text-dark); letter-spacing:.2px; }
+  .sig-line{ border-top:1.5px solid var(--text-dark); padding-top:8px; font-size:11.5px; color:var(--text-muted); text-transform:uppercase; letter-spacing:.4px; }
+
+  /* ---------------- ACTIONS / STEP NAV ---------------- */
+  .actions{ display:flex; align-items:center; flex-wrap:wrap; gap:14px; margin:10px 0 36px; }
+  .actions .spacer{ flex:1; }
+  .print-tip{ font-size:12px; color:var(--text-muted); margin-top:-16px; margin-bottom:30px; }
+
+  /* ---------------- MAIN MENU (super admin: Print Form / Manage Users) ---------------- */
+  .main-menu{ display:none; gap:6px; margin:0 0 28px; background:var(--teal-tint); border-radius:10px; padding:6px; width:fit-content; }
+  .menu-btn{
+    padding:10px 20px; border-radius:8px; border:none; background:transparent;
+    color:var(--navy); font-size:13px; font-weight:600; cursor:pointer; font-family:"Segoe UI", Calibri, sans-serif;
+    transition:background .12s ease, color .12s ease;
+  }
+  .menu-btn:hover{ background:rgba(4,62,112,.08); }
+  .menu-btn.active{ background:var(--navy); color:#fff; box-shadow:var(--shadow-sm); }
+
+  /* ---------------- STEP PANELS ---------------- */
+  .step-panel{ display:none; }
+  .step-panel.active{ display:block; }
+
+  /* ---------------- PRINT: A4-OPTIMIZED ---------------- */
+  @page{ size: A4; margin: 14mm 16mm; }
+  @media print{
+    body{ background:#fff; }
+    .no-print{ display:none !important; }
+    .page{ max-width:100%; padding:0; orphans:3; widows:3; }
+    .header{ margin:0 0 18px; padding:0 0 16px; box-shadow:none; border-bottom:2px solid var(--navy); border-radius:0; page-break-after:avoid; }
+    .header::after{ display:none; }
+    .card{ border:1px solid #D7DEE4; box-shadow:none; border-radius:0; padding:18px 20px; margin-bottom:16px; break-inside:avoid; }
+    .print-footer{ page-break-after:avoid; page-break-before:avoid; margin-bottom:0; padding-bottom:0; }
+    .equip-table th{ background:none; color:var(--navy); }
+    .equip-table tr{ break-inside:avoid; }
+    .step-panel{ display:none !important; }
+    #step4{ display:block !important; }
+    #printFormView{ display:block !important; }
+    #manageUsersView{ display:none !important; }
+    .review-value{ border-bottom:1px solid #94A3B8; }
+    #saveDraftStatus{ display:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="header">
+    <div class="brand-badge" id="brandBadge">🏢</div>
+    <div class="header-text">
+      <h1 id="brandName">Valmed Group PH, Inc.</h1>
+      <p>IT Department — Equipment Release Form</p>
+    </div>
+    <div class="header-meta">
+      Form Ref: <span id="formRef">—</span><br>
+      Date Prepared: <span id="formDate">—</span>
+    </div>
+  </div>
+
+  <!-- ============ AUTH GATE — nothing below unlocks until this passes ============ -->
+  <div class="card" id="authGate">
+    <h2>IT Staff Sign-In Required</h2>
+    <p class="card-subtitle">This form is restricted to authorized IT staff. Sign in with your company Microsoft account to continue.</p>
+    <div class="lookup-actions">
+      <button class="btn btn-primary" id="signInBtn">🔑 Sign in with Microsoft</button>
+    </div>
+    <p class="field-status" id="authStatus"></p>
+  </div>
+
+  <div id="appContent" style="display:none;">
+
+  <div class="no-print" id="signedInRow" style="margin:-6px 0 18px; font-size:12.5px; color:var(--text-muted);">
+    Signed in as <strong id="signedInName">—</strong> &nbsp;·&nbsp; <a href="#" id="signOutLink" style="color:var(--navy-light);">Sign out</a>
+  </div>
+
+  <div class="no-print">
+    <span class="sync-note" id="syncNote">SYNC: CHECKING SHAREPOINT CONNECTION…</span>
+  </div>
+
+  <div class="no-print main-menu" id="mainMenu">
+    <button class="btn menu-btn active" id="menuPrintFormBtn">Print Form</button>
+    <button class="btn menu-btn" id="menuManageUsersBtn">Manage Users</button>
+  </div>
+
+  <div id="printFormView">
+
+  <!-- ============ STEPPER (screen only) ============ -->
+  <div class="stepper no-print" id="stepper">
+    <div class="step-item current" data-step="1">
+      <div class="step-track"></div>
+      <div class="step-circle">1</div>
+      <div class="step-label">Find Equipment</div>
+    </div>
+    <div class="step-item" data-step="2">
+      <div class="step-track"></div>
+      <div class="step-circle">2</div>
+      <div class="step-label">Equipment Issued</div>
+    </div>
+    <div class="step-item" data-step="3">
+      <div class="step-track"></div>
+      <div class="step-circle">3</div>
+      <div class="step-label">Employee Information</div>
+    </div>
+    <div class="step-item" data-step="4">
+      <div class="step-track"></div>
+      <div class="step-circle">4</div>
+      <div class="step-label">Review &amp; Save</div>
+    </div>
+  </div>
+
+  <!-- ======================================================= -->
+  <!-- STEP 1 — FIND EQUIPMENT                                  -->
+  <!-- ======================================================= -->
+  <section class="step-panel active" id="step1">
+    <div class="card">
+      <h2>Find Equipment</h2>
+      <p class="card-subtitle">Search by employee email to pull everything currently assigned to them.</p>
+
+      <div class="field-grid">
+        <div class="field full">
+          <label for="ownerEmail">👤 Employee Email (Current Owner)</label>
+          <input type="email" id="ownerEmail" placeholder="e.g. kmadrid@thevalmedgroup.com">
+          <p class="field-status" id="ownerStatus"></p>
+        </div>
+      </div>
+      <div class="lookup-actions">
+        <button class="btn btn-primary" id="lookupByOwnerBtn">🔎 Search Equipment</button>
+      </div>
+    </div>
+
+    <div class="actions no-print">
+      <button class="btn btn-ghost" id="clearBtn">↺ Clear</button>
+      <div class="spacer"></div>
+      <button class="btn btn-primary" id="toStep2Btn">Proceed →</button>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- STEP 2 — EQUIPMENT ISSUED / RESULTS                      -->
+  <!-- ======================================================= -->
+  <section class="step-panel" id="step2">
+    <div class="card">
+      <h2>Equipment Issued</h2>
+      <p class="card-subtitle">Review everything found for this employee before continuing.</p>
+      <table class="equip-table" id="equipTable">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Asset ID</th>
+            <th>Brand &amp; Model</th>
+            <th>Serial Number</th>
+            <th>Specifications</th>
+            <th>Accessories</th>
+            <th>Deployment Date</th>
+          </tr>
+        </thead>
+        <tbody id="equipTableBody">
+          <tr><td colspan="7" class="equip-empty">No equipment added yet — use Find Equipment above.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>IT Remarks</h2>
+      <div class="field full">
+        <label for="itRemarks">Condition of equipment issued</label>
+        <textarea id="itRemarks" class="equip-font" rows="3" placeholder="e.g. All items issued in good working condition, no visible damage. Leave blank if nothing to note."></textarea>
+        <p class="field-hint">Space for IT to record the condition of the equipment above at hand-off, or anything observed worth flagging (scratches, missing accessories, prior repairs, etc.). Leave blank if there's nothing to note.</p>
+      </div>
+    </div>
+
+    <div class="actions no-print">
+      <button class="btn btn-ghost" id="backToStep1Btn">← Back</button>
+      <div class="spacer"></div>
+      <button class="btn btn-primary" id="toStep3Btn">Proceed →</button>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- STEP 3 — EMPLOYEE INFORMATION                            -->
+  <!-- ======================================================= -->
+  <section class="step-panel" id="step3">
+    <div class="card">
+      <h2>Employee Information</h2>
+      <div class="field-grid">
+        <div class="field">
+          <label for="empName">Full Name</label>
+          <input type="text" id="empName" placeholder="Auto-filled from lookup, or type manually">
+        </div>
+        <div class="field">
+          <label for="empPosition">Job Position</label>
+          <input type="text" id="empPosition" placeholder="e.g. IT Specialist">
+        </div>
+        <div class="field">
+          <label for="empDepartment">Department</label>
+          <select id="empDepartment">
+            <option value="">Select your department</option>
+            <option value="Authorization and Shipping">Authorization and Shipping</option>
+            <option value="Billing and Claims">Billing and Claims</option>
+            <option value="Bridge">Bridge</option>
+            <option value="Finance Department">Finance Department</option>
+            <option value="HR Department">HR Department</option>
+            <option value="IT Department">IT Department</option>
+            <option value="Order Fulfillment">Order Fulfillment</option>
+            <option value="Order Management">Order Management</option>
+            <option value="Patient Contact Support">Patient Contact Support</option>
+            <option value="Programming">Programming</option>
+            <option value="WFM">WFM</option>
+            <option value="QA">QA</option>
+            <option value="Supplyline">Supplyline</option>
+            <option value="Support Services">Support Services</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="empStartDate">Start Date</label>
+          <input type="date" id="empStartDate">
+        </div>
+      </div>
+      <p class="empty-hint no-print" style="font-size:12.5px;color:var(--text-muted);font-style:italic;margin:10px 0 0;">Ensure that the form is completed before printing or saving.</p>
+    </div>
+
+    <div class="actions no-print">
+      <button class="btn btn-ghost" id="backToStep2Btn">← Back</button>
+      <div class="spacer"></div>
+      <button class="btn btn-primary" id="toStep4Btn">Proceed →</button>
+    </div>
+  </section>
+
+  <!-- ======================================================= -->
+  <!-- STEP 4 — REVIEW & SAVE (the printed document)           -->
+  <!-- ======================================================= -->
+  <section class="step-panel" id="step4">
+
+    <div class="card">
+      <h2>Employee Information</h2>
+      <div class="review-grid">
+        <div class="review-field">
+          <span class="review-label">Full Name</span>
+          <span class="review-value" id="reviewName">—</span>
+        </div>
+        <div class="review-field">
+          <span class="review-label">Job Position</span>
+          <span class="review-value" id="reviewPosition">—</span>
+        </div>
+        <div class="review-field">
+          <span class="review-label">Department</span>
+          <span class="review-value" id="reviewDepartment">—</span>
+        </div>
+        <div class="review-field">
+          <span class="review-label">Start Date</span>
+          <span class="review-value" id="reviewStartDate">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Equipment Issued</h2>
+      <table class="equip-table" id="equipTablePrint">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Asset ID</th>
+            <th>Brand &amp; Model</th>
+            <th>Serial Number</th>
+            <th>Specifications</th>
+            <th>Accessories</th>
+            <th>Deployment Date</th>
+          </tr>
+        </thead>
+        <tbody id="equipTableBodyPrint">
+          <tr><td colspan="7" class="equip-empty">No equipment added yet.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>IT Remarks</h2>
+      <div class="review-field full">
+        <span class="review-label">Condition of equipment issued</span>
+        <span class="review-value wrap equip-font" id="reviewRemarks">—</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Release Acknowledgment</h2><br>
+      <p class="ack-text">
+        I acknowledge that I have received the IT equipment listed on this form in good working condition.
+        I understand that this equipment remains the property of the Company, that I am responsible for its
+        proper care and use, and that I must return it in good condition upon request or upon separation
+        from the Company. Any loss, theft, or damage due to negligence may be reported to IT and may be
+        subject to Company policy. I further confirm that I have reviewed, understood, and agree to comply
+        with <strong>IT-POL-001 — Company Device Usage and Accountability Policy 2.0</strong>
+        (<a href="https://valmarsurgical.sharepoint.com/:b:/s/valmed-ph/IQBamBo5koknQbXwRj5h12ANATiLG_dI0orIAlfTxQtR7zw" target="_blank" rel="noopener">view policy</a>),
+        and that my signature below serves as acknowledgment of, agreement to, and sign-off on that policy.
+        <span class="policy-url">Policy link (copy and paste into your browser if the link above doesn't open): https://valmarsurgical.sharepoint.com/:b:/s/valmed-ph/IQBamBo5koknQbXwRj5h12ANATiLG_dI0orIAlfTxQtR7zw</span>
+      </p>
+      <div class="sig-grid">
+        <div>
+          <div class="sig-name-block"><span class="sig-name" id="empSigName">&nbsp;</span></div>
+          <div class="sig-line">Employee Signature &nbsp;/&nbsp; Date</div>
+        </div>
+        <div>
+          <div class="sig-name-block"><span class="sig-name" id="itStaffSigName">&nbsp;</span></div>
+          <div class="sig-line">IT Staff Signature &nbsp;/&nbsp; Date</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="print-footer">
+      Valmed Group PH, Inc. &nbsp;|&nbsp; IT Department &nbsp;|&nbsp; Email: helpdesk@thevalmedgroup.com &nbsp;|&nbsp; ITERF version 3.0
+    </div>
+
+    <div class="actions no-print">
+      <button class="btn btn-ghost" id="backToStep3Btn">← Back / Edit</button>
+      <div class="spacer"></div>
+      <button class="btn btn-primary" id="printBtn">Print</button>
+      <button class="btn btn-primary" id="saveSharePointBtn">Save</button>
+      <button class="btn btn-primary" id="sendEmailBtn" disabled title="Save to SharePoint first">Send</button>
+      <button class="btn btn-ghost" id="newFormBtn">New Form</button>
+    </div>
+    <p class="lookup-summary no-print" id="saveDraftStatus" style="margin:-22px 0 24px;"></p>
+    <p class="print-tip no-print">Tip: "Print" opens the exact PDF that gets saved to SharePoint in a new tab — use your PDF viewer's own Print button, or Ctrl/Cmd+P from there, for a clean A4 printout with no extra browser headers/footers.</p>
+
+  </section>
+
+  </div><!-- /#printFormView -->
+
+  </div><!-- /#appContent -->
+
+  <!-- ============ MANAGE USERS — super admin only ============ -->
+  <div class="card no-print" id="manageUsersView" style="display:none;">
+    <h2>Manage Users</h2>
+    <p class="card-subtitle">This list is hardcoded in the page for security — there's no live database. To add someone, generate their line below, paste it into <code>CONFIG.approvedStaff</code> in the HTML file, then re-upload/re-deploy to Netlify.</p>
+
+    <div class="field-status" style="margin-bottom:14px;"><strong>Currently approved:</strong></div>
+    <table class="equip-table" id="staffTable" style="margin-bottom:18px;">
+      <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Actions</th></tr></thead>
+      <tbody id="staffTableBody"></tbody>
+    </table>
+
+    <div class="field-grid">
+      <div class="field">
+        <label for="newStaffEmail">New Staff Email</label>
+        <input type="email" id="newStaffEmail" placeholder="e.g. jdelacruz@thevalmedgroup.com">
+      </div>
+      <div class="field">
+        <label for="newStaffName">Display Name</label>
+        <input type="text" id="newStaffName" placeholder="e.g. Juan Dela Cruz">
+      </div>
+      <div class="field">
+        <label for="newStaffRole">Role</label>
+        <select id="newStaffRole" style="padding:9px 11px; border:1.5px solid var(--border); border-radius:6px; font-size:13.5px; font-family:'Segoe UI', Calibri, sans-serif; background:#fff;">
+          <option value="user">Normal user</option>
+          <option value="superadmin">Super admin</option>
+        </select>
+      </div>
+    </div>
+    <div class="lookup-actions">
+      <button class="btn btn-primary" id="addStaffBtn">➕ Generate line to add</button>
+    </div>
+    <p class="field-status" id="addStaffStatus"></p>
+    <pre id="addStaffSnippet" style="display:none; background:#022A4E; color:#8FE0D3; padding:12px 14px; border-radius:8px; font-size:12.5px; overflow-x:auto; margin-top:10px; font-family:'Cascadia Code','Courier New',monospace;"></pre>
+  </div>
+
+</div>
+
+<!-- Microsoft sign-in library — real Microsoft 365 authentication, no custom passwords.
+     Note: Microsoft's own alcdn.msauth.net CDN only ever hosted MSAL v2.x and was
+     retired for v3+, so this loads the npm-published build from jsDelivr, with a
+     fallback to unpkg if jsDelivr is ever unreachable. -->
+<script src="https://cdn.jsdelivr.net/npm/@azure/msal-browser@3.7.1/lib/msal-browser.min.js"
+        onerror="this.onerror=null; var s=document.createElement('script'); s.src='https://unpkg.com/@azure/msal-browser@3.7.1/lib/msal-browser.min.js'; document.head.appendChild(s);"></script>
+<!-- PDF generation libraries — used only by the "Save PDF to SharePoint" button -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+/* =====================================================================
+   CONFIG — adjust these to match your actual SharePoint list schema.
+   ===================================================================== */
+const CONFIG = {
+  /* ===================================================================
+     SIGN-IN (Microsoft Entra ID / Azure AD) — SETUP REQUIRED BEFORE USE
+     ===================================================================
+     This form is locked behind a real Microsoft sign-in — staff use
+     their own existing company Microsoft password. Nobody, including
+     the super admin, sees or sets anyone else's password. One-time
+     setup, done by whoever has admin rights in your Microsoft 365 /
+     Azure tenant (this can be Kollin if he has Application
+     Administrator or Global Administrator rights):
+
+       1. Go to portal.azure.com → Microsoft Entra ID → App registrations
+          → New registration.
+       2. Name it e.g. "IT Equipment Release Form".
+       3. Supported account types: "Accounts in this organizational
+          directory only" (single tenant).
+       4. Redirect URI: platform = "Single-page application (SPA)". Add
+          TWO redirect URIs here:
+            - The site root, e.g. https://your-site-name.netlify.app/
+            - The blank redirect page, e.g.
+              https://your-site-name.netlify.app/blank.html
+          (blank.html is a separate tiny file included alongside this
+          one — required by MSAL for popup sign-in; do not skip it or
+          sign-in will fail with an "uninitialized_public_client_
+          application" error.)
+       5. Click Register. On the app's Overview page, copy:
+            - "Application (client) ID"   -> paste into clientId below
+            - "Directory (tenant) ID"     -> paste into tenantId below
+       6. No admin consent is required for the "User.Read" scope used
+          here — it's a default delegated permission every user can
+          already grant themselves on sign-in.
+
+     This works fine on Netlify's free plan — it's just JavaScript
+     running in the page; Netlify doesn't need to know or do anything
+     about it. */
+  aad: {
+    clientId: "97bbcf8f-4a4f-4206-ad6a-9e14a3b2e00b",
+    tenantId: "358b4ff6-6445-4bee-9957-846dcc5abaef"
+  },
+
+  /* ===================================================================
+     AUTHORIZATION — who's allowed in once Microsoft confirms who they are
+     ===================================================================
+     Microsoft sign-in proves someone really is who they claim (their
+     real email, verified by their real Microsoft password). This list
+     then decides what they're allowed to do here.
+
+     To add or remove someone: edit the list below, save this file, and
+     re-deploy to Netlify (drag the updated file into your Netlify site,
+     or push to the connected Git repo — whichever you use).
+
+     role: "superadmin" -> can see the Admin panel (add/manage staff)
+     role: "user"        -> can use the form, no Admin panel */
+  approvedStaff: [
+    { email: "kmadrid@thevalmedgroup.com",   name: "Kollin Madrid",   role: "superadmin" },
+    { email: "robinson@thevalmedgroup.com",  name: "Robinson Ibus",   role: "user" }
+    // Add more like this (don't forget the comma above this line):
+    // { email: "newperson@thevalmedgroup.com", name: "New Person", role: "user" }
+  ],
+
+  companyName: "Valmed Group PH, Inc.",
+  companyLogoUrl: "https://raw.githubusercontent.com/vlmdkm/valmed-logo/6ceffb6a2887fbd3c26c3cf2ee736d5c49b6e3bc/VGPH2.png",
+
+  siteUrl: "https://valmarsurgical.sharepoint.com/sites/it-department",
+  listName: "IT Inventory - PH",
+
+  // Destination for the "Save PDF to SharePoint" button below. This is a
+  // different site/list than the inventory lookups above — it's where the
+  // completed release form itself gets saved as a draft PDF.
+  draftsSiteUrl: "https://valmarsurgical.sharepoint.com/sites/it-department/",
+  draftsListName: "ITERF - Drafts",
+
+  // Mailbox CC'd on every "Send" email — internal IT mailbox for
+  // non-ticket matters (this does NOT go through the helpdesk ticket queue).
+  itDeptEmail: "it@thevalmedgroup.com",
+
+  // Power Automate flow that handles BOTH the Save and Send buttons — same
+  // URL, but the JSON body now carries an "action" field instead of a
+  // sendEmail flag, and the flow MUST branch on it so the two actions never
+  // overlap:
+  //   Trigger: Manual, body { "action": "save"|"send", "fileName": "...",
+  //             "fileContentBase64": "...", "employeeName": "...",
+  //             "jobPosition": "...", "department": "...",
+  //             "startDate": "YYYY-MM-DD", "remarks": "...", "formRef": "...",
+  //             "employeeEmail": "...", "ccEmail": "..." }
+  //
+  // "remarks" (new field, added after the version documented below) is
+  // IT's freeform notes on the condition of the equipment at hand-off — NOT
+  // an employee field. It can be an empty string; that's the normal case
+  // when there's nothing to flag, not a bug. Map it to the "Remarks" column
+  // on the ITERF - Drafts list in the same Create/Update item action as
+  // Job Position / Department / Start Date below — if remarks aren't
+  // showing up in SharePoint, it's almost certainly this column mapping
+  // that's missing, same failure mode as the Position/Department/Start Date
+  // issue previously.
+  //
+  // *** If you're seeing 2 SharePoint entries per submission (one with the
+  // email column filled in, one blank) and NO email ever arrives, the flow
+  // has NOT been updated for the fields above yet — it's still the old
+  // version. Concretely, that old flow likely: (a) has no condition around
+  // the Create file/item step, so it runs on every call regardless of
+  // action — hence two entries per Save+Send pair — and (b) still checks a
+  // "sendEmail" field for whether to send email, but that field no longer
+  // exists in the body (it's "action" now), so the condition is always
+  // false and the email step never fires. The flow itself must be edited
+  // in Power Automate to match the branching below — no amount of change
+  // to this HTML file can fix that from the browser side.
+  //
+  //   Condition: action is equal to "save"
+  //     If yes ->
+  //       Action: Create file (SharePoint) — Site = draftsSiteUrl, Folder =
+  //         the document library backing "ITERF - Drafts", File Name =
+  //         fileName, File Content = base64 decode of fileContentBase64.
+  //         Set "If file already exists" = Replace (not "Fail"/auto-rename)
+  //         so re-saving the same formRef updates the same file instead of
+  //         creating a duplicate.
+  //       Action: Create item / Update item — map list columns: Employee
+  //         Name = employeeName, Job Position = jobPosition,
+  //         Department = department, Start Date = startDate,
+  //         Remarks = remarks, Form Ref = formRef, Status = "Draft"
+  //         (this step is what was
+  //         missing/unmapped, which is why Position/Department/Start Date
+  //         weren't showing up in SharePoint even though the file itself saved)
+  //     If no (action is "send") -> skip this branch entirely, do NOT create,
+  //       update, or touch any SharePoint file or list item.
+  //
+  //   Condition: action is equal to "send"
+  //     If yes -> "Send an email (V2)" (or "...from a shared mailbox (V2)"
+  //       if it@... is a shared mailbox you can send AS): To = employeeEmail,
+  //       Cc = ccEmail, Subject = "IT Equipment Release Form — " + formRef,
+  //       Attachment = fileName / base64 decode of fileContentBase64. This
+  //       branch never writes to SharePoint — Send only emails a copy.
+  //     If no (action is "save") -> skip, no email is sent.
+  //
+  // Paste that flow's URL below once created — leave blank until then, the
+  // button will tell the user it isn't configured yet rather than fail silently.
+  saveDraftUrl: "https://default358b4ff664454bee9957846dcc5aba.ef.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/a0ca8c7d924941aebe80cd40a0007c4b/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=TU3gcGwOBmWn-Gt7a5Zxd4XDO4SSNAUU5LkUy6IT3m4",
+
+
+  // Flow used only as a connectivity ping for the sync-status note at the top
+  // of the form (kept from the original per-Asset-ID lookup flow). Expects
+  // POST body {"assetId":"..."} and just needs to respond with HTTP 200.
+  lookupUrl: "https://default358b4ff664454bee9957846dcc5aba.ef.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/7bb130fdc8904da3b7b241f247b54cb1/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=KZWo3D9jBHhpkX9MDui-c8tuIO3X3kiay-K7jfUVUzg",
+
+  // Flow — looks up ALL items assigned to a given owner email.
+  // Expects POST body {"email":"..."}, returns a JSON ARRAY of matching list
+  // items (or an empty array [] if none). Build this as a separate flow:
+  //   Trigger: Manual, body { "email": "..." }
+  //   Get_items: Filter Query = Current_x0020_Owner/EMail eq '@{triggerBody()?['email']}'
+  //              Pagination: Minimum 5000 (leave Top Count blank/high — this can
+  //              return more than one item, unlike the Asset ID flow)
+  //   Condition: @greater(length(outputs('Get_items')?['body']?['value']), 0)
+  //     True  -> Response: Status 200, Body = outputs('Get_items')?['body']?['value']  (the WHOLE array)
+  //     False -> Response: Status 200, Body = []
+  // Paste that flow's URL below once created.
+  lookupByOwnerUrl: "https://default358b4ff664454bee9957846dcc5aba.ef.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/47fd070b8b3f458cad3affd691a74189/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=0W98Kr5pf7qxrx1cbkT0KfIXCUHU5-JHnluxbhlka8A",
+
+  // Internal column names in the "IT Inventory - PH" list — confirmed against
+  // a real Get_items response for a Laptop record. Several of these are
+  // SharePoint "lookup/choice" columns shaped like { Value: "..." } rather
+  // than plain strings; fieldVal() below automatically unwraps those.
+  // "owner" is the Person/Group column ("Current Owner") — it comes back as
+  // an object with DisplayName / Email / JobTitle / Department, handled
+  // separately by ownerInfo() below rather than through fieldVal().
+  //
+  // STILL TO VERIFY: screenSize — no Monitor record has been sampled yet, so
+  // this column name is a guess. Run a Monitor lookup and check the console
+  // to confirm the real field name.
+  columns: {
+    assetId:        "Title",
+    category:       "Asset_x0020_Type",
+    brand:          "Make",
+    model:          "Model",
+    serialNumber:   "Serial_x0020_Number",
+    cpu:            "CPU",
+    ram:            "RAM",
+    storage:        "Storage",
+    screenSize:     "ScreenSize",
+    accessories:    "Accessories",
+    deploymentDate: "DateReleased",
+    owner:          "Current_x0020_Owner"
+  },
+
+};
+
+// Browser tab icon — reuse the same company logo shown in the header badge,
+// applied immediately on page load (not gated behind sign-in) so it shows
+// on the sign-in screen too.
+if (CONFIG.companyLogoUrl){
+  document.getElementById('faviconLink').href = CONFIG.companyLogoUrl;
+}
+
+const CATEGORY_ORDER = ['laptop','monitor','headset','mouse']; // sort order for the combined table
+
+/* Unified equipment store, keyed by Asset ID (Title), so items from either
+   search mode (owner-email or per-field Asset ID) live in one place and
+   the table just renders whatever is currently in here. */
+let equipmentItems = {};
+
+/* ================= INIT / BRANDING ================= */
+function applyBranding(){
+  document.getElementById('brandName').textContent = CONFIG.companyName;
+  if (CONFIG.companyLogoUrl){
+    document.getElementById('brandBadge').innerHTML =
+      `<img src="${CONFIG.companyLogoUrl}" alt="${CONFIG.companyName} logo">`;
+  }
+  generateFormRef();
+}
+
+function generateFormRef(){
+  const now = new Date();
+  document.getElementById('formDate').textContent = now.toLocaleDateString(undefined, { year:'numeric', month:'long', day:'numeric' });
+
+  /* Form Ref uniqueness — this is a static page with no shared backend
+     counter, so multiple IT staff could theoretically generate a form at
+     the exact same moment. To make a collision astronomically unlikely:
+       - date + time-of-day down to the SECOND (narrows the collision
+         window to people clicking within the same second)
+       - a random component drawn from crypto.getRandomValues (a much
+         larger, better-quality random space than Math.random()), shown
+         as a 5-character base36 string (~60 million possibilities)
+     Two people would need to generate a ref in the same second AND
+     draw the same random string — not something that will happen in
+     practice at this form's volume. A 100%-guaranteed-unique ref would
+     require a shared counter (e.g. using SharePoint's own auto-
+     incrementing list ID as the real reference once a form is saved). */
+  const datePart = now.toISOString().slice(0,10).replace(/-/g,'');
+  const timePart = String(now.getHours()).padStart(2,'0') + String(now.getMinutes()).padStart(2,'0') + String(now.getSeconds()).padStart(2,'0');
+  let randomPart;
+  if (window.crypto && crypto.getRandomValues){
+    randomPart = crypto.getRandomValues(new Uint32Array(1))[0].toString(36).toUpperCase().padStart(5,'0').slice(-5);
+  } else {
+    randomPart = Math.floor(Math.random() * 60466176).toString(36).toUpperCase().padStart(5,'0'); // 36^5
+  }
+
+  document.getElementById('formRef').textContent = `ER-${datePart}-${timePart}-${randomPart}`;
+}
+
+const SYNC_TIMEOUT_MS = 8000; // give the Power Automate flow 8s to respond before giving up
+
+async function checkConnection(){
+  const note = document.getElementById('syncNote');
+  if (!CONFIG.lookupUrl){
+    note.textContent = 'SYNC: NOT CONFIGURED — add the Power Automate flow URL to CONFIG.lookupUrl';
+    return;
+  }
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), SYNC_TIMEOUT_MS);
+
+  try{
+    const res = await fetch(CONFIG.lookupUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ assetId: '__connection_check__' }),
+      signal: controller.signal
+    });
+    if (res.ok){
+      note.textContent = 'SYNC: CONNECTED TO SHAREPOINT — ' + CONFIG.listName;
+      note.classList.add('on');
+    } else {
+      note.textContent = 'SYNC: FLOW NOT REACHABLE (HTTP ' + res.status + ') — check the flow URL / that it\'s turned on';
+    }
+  } catch(err){
+    if (err.name === 'AbortError'){
+      note.textContent = 'SYNC: NO RESPONSE AFTER ' + (SYNC_TIMEOUT_MS/1000) + 's — flow may be off, cold-starting, or blocked. Search will still work when you try it.';
+    } else {
+      note.textContent = 'SYNC: CONNECTION FAILED — ' + err.message;
+    }
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+/* ================= LOOKUP — BY OWNER EMAIL (all items) ================= */
+async function fetchAssetsByOwnerEmail(email){
+  if (!CONFIG.lookupByOwnerUrl) throw new Error('Owner-lookup flow URL is not configured yet (CONFIG.lookupByOwnerUrl).');
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), SYNC_TIMEOUT_MS);
+
+  let res;
+  try{
+    res = await fetch(CONFIG.lookupByOwnerUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email }),
+      signal: controller.signal
+    });
+  } catch(err){
+    if (err.name === 'AbortError') throw new Error('No response after ' + (SYNC_TIMEOUT_MS/1000) + 's — the flow may be off or cold-starting. Try again.');
+    throw err;
+  } finally {
+    clearTimeout(timer);
+  }
+
+  if (!res.ok) throw new Error('Flow request failed (HTTP ' + res.status + ')');
+  const data = await res.json().catch(() => null);
+  console.log('[Owner Lookup]', email, '->', data);
+  if (!data) return [];
+  return Array.isArray(data) ? data : [data];
+}
+
+function fieldVal(item, key){
+  const col = CONFIG.columns[key];
+  if (!col) return '';
+  let val = item ? item[col] : undefined;
+  // SharePoint lookup/choice columns come back shaped like { Value: "..." }
+  // instead of a plain string — unwrap that automatically.
+  if (val && typeof val === 'object' && 'Value' in val) val = val.Value;
+  if (val === undefined || val === null || val === '') return '';
+  return String(val);
+}
+
+/* Person/Group ("Current Owner") columns come back as a distinct object
+   shape ({ DisplayName, Email, JobTitle, Department, ... }), not { Value }. */
+function ownerInfo(item){
+  const col = CONFIG.columns.owner;
+  const person = item ? item[col] : null;
+  if (!person || typeof person !== 'object') return null;
+  return {
+    name: person.DisplayName || '',
+    email: person.Email || '',
+    jobTitle: person.JobTitle || '',
+    department: person.Department || ''
+  };
+}
+
+function formatDateVal(raw){
+  if (!raw) return '';
+  const d = new Date(raw);
+  if (isNaN(d.getTime())) return raw;
+  // Date-only values (from <input type="date"> and from SharePoint Date
+  // columns) parse as UTC midnight. Formatting in the browser's local
+  // timezone can then roll them back a day for anyone west of UTC (e.g.
+  // June 24 becomes June 23). Forcing the display itself to read as UTC
+  // keeps the calendar date exactly what was entered/stored, regardless
+  // of the viewer's timezone.
+  return d.toLocaleDateString(undefined, { year:'numeric', month:'long', day:'numeric', timeZone:'UTC' });
+}
+
+function escapeHtml(str){
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+/* Builds a single "Specifications" string per device category (technical
+   specs only — e.g. CPU, RAM, storage, screen size), so the printed table
+   stays compact regardless of how many raw fields exist. Accessories are
+   kept separate — see buildAccessories() below. */
+function buildSpecs(catLower, item){
+  const parts = [];
+  if (catLower === 'laptop'){
+    if (fieldVal(item,'cpu')) parts.push(fieldVal(item,'cpu'));
+    if (fieldVal(item,'ram')) parts.push(fieldVal(item,'ram') + ' RAM');
+    if (fieldVal(item,'storage')) parts.push(fieldVal(item,'storage'));
+  } else if (catLower === 'monitor'){
+    if (fieldVal(item,'screenSize')) parts.push(fieldVal(item,'screenSize') + '" screen');
+  }
+  return parts.join(', ');
+}
+
+/* Builds the "Accessories" string for an item (e.g. "Laptop Charger, Bag"),
+   kept in its own column separate from technical Specifications. */
+function buildAccessories(item){
+  return fieldVal(item,'accessories') || '';
+}
+
+/* Maps a free-text department string coming back from the lookup onto one of
+   the fixed <select id="empDepartment"> options (case/whitespace-insensitive
+   exact match). Falls back to "Other" if the returned text doesn't match any
+   known option, so the dropdown never silently stays on the placeholder. */
+function matchDepartmentOption(deptRaw, selectEl){
+  if (!deptRaw) return '';
+  const target = deptRaw.trim().toLowerCase();
+  const options = Array.from(selectEl.options);
+  const match = options.find(o => o.value && o.value.toLowerCase() === target);
+  return match ? match.value : 'Other';
+}
+
+function fillEmployeeInfoFromOwner(item){
+  const info = ownerInfo(item);
+  const nameEl = document.getElementById('empName');
+  const posEl = document.getElementById('empPosition');
+  const deptEl = document.getElementById('empDepartment');
+  const startEl = document.getElementById('empStartDate');
+
+  // Every field here is always OVERWRITTEN (not just filled when blank) so a
+  // fresh lookup for a different employee never leaves the previous
+  // employee's name/position/department/start-date sitting in the form.
+  // Start Date isn't available from SharePoint's Person field, so it's
+  // cleared for manual entry rather than left carrying over the last person's date.
+  nameEl.value = (info && info.name) || '';
+  posEl.value = (info && info.jobTitle) || '';
+  deptEl.value = (info && info.department) ? matchDepartmentOption(info.department, deptEl) : '';
+  startEl.value = '';
+}
+
+/* Adds/overwrites one item into the unified store, keyed by its Asset ID. */
+function addEquipmentItem(item){
+  const id = fieldVal(item, 'assetId');
+  if (!id) return;
+  equipmentItems[id] = item;
+}
+
+function clearEquipment(){
+  equipmentItems = {};
+}
+
+/* Renders the Equipment Issued table into BOTH the Step 2 (review) table and
+   the Step 4 (print) table, so they always stay identical — one render, two
+   destinations, driven by whatever is currently in `equipmentItems`. */
+function renderEquipTable(){
+  const items = Object.values(equipmentItems);
+
+  items.sort((a, b) => {
+    const catA = fieldVal(a, 'category').toLowerCase();
+    const catB = fieldVal(b, 'category').toLowerCase();
+    const idxA = CATEGORY_ORDER.indexOf(catA); const iA = idxA === -1 ? 99 : idxA;
+    const idxB = CATEGORY_ORDER.indexOf(catB); const iB = idxB === -1 ? 99 : idxB;
+    if (iA !== iB) return iA - iB;
+    return fieldVal(a,'assetId').localeCompare(fieldVal(b,'assetId'));
+  });
+
+  const rows = items.map(item => {
+    const catLower = fieldVal(item, 'category').toLowerCase();
+    const catLabel = fieldVal(item, 'category') || 'Other';
+    const assetId = fieldVal(item, 'assetId');
+    const brandModel = [fieldVal(item,'brand'), fieldVal(item,'model')].filter(Boolean).join(' ') || 'N/A';
+    const serial = fieldVal(item,'serialNumber') || 'N/A';
+    const specs = buildSpecs(catLower, item) || 'N/A';
+    const accessories = buildAccessories(item) || 'N/A';
+    const deployed = formatDateVal(fieldVal(item,'deploymentDate')) || 'N/A';
+    return `<tr>
+      <td class="item">${escapeHtml(catLabel)}</td>
+      <td class="assetid">${escapeHtml(assetId)}</td>
+      <td>${escapeHtml(brandModel)}</td>
+      <td class="assetid">${escapeHtml(serial)}</td>
+      <td>${escapeHtml(specs)}</td>
+      <td>${escapeHtml(accessories)}</td>
+      <td>${escapeHtml(deployed)}</td>
+    </tr>`;
+  });
+
+  const html = rows.length
+    ? rows.join('')
+    : `<tr><td colspan="7" class="equip-empty">No equipment added yet — use Find Equipment above.</td></tr>`;
+
+  document.getElementById('equipTableBody').innerHTML = html;
+  const printBody = document.getElementById('equipTableBodyPrint');
+  if (printBody) printBody.innerHTML = html;
+}
+
+/* ============ SEARCH MODE 1: by owner email — pulls everything at once ============ */
+async function lookupByOwner(){
+  const btn = document.getElementById('lookupByOwnerBtn');
+  const emailInput = document.getElementById('ownerEmail');
+  const statusEl = document.getElementById('ownerStatus');
+  const email = emailInput.value.trim();
+  emailInput.value = email;
+
+  if (!email){
+    statusEl.textContent = 'Enter an employee email first.';
+    statusEl.className = 'field-status err';
+    return;
+  }
+
+  btn.disabled = true;
+  statusEl.textContent = 'Looking up assigned devices…';
+  statusEl.className = 'field-status';
+
+  try{
+    const items = await fetchAssetsByOwnerEmail(email);
+    if (!items.length){
+      statusEl.textContent = `No devices found assigned to "${email}".`;
+      statusEl.className = 'field-status err';
+      // This is a fresh search for a different employee — clear out whatever
+      // was left in the table from a previous lookup so it doesn't carry over.
+      clearEquipment();
+      renderEquipTable();
+      return;
+    }
+
+    // Fresh pull for this employee replaces whatever was in the table.
+    clearEquipment();
+    items.forEach(addEquipmentItem);
+    fillEmployeeInfoFromOwner(items[0]);
+    renderEquipTable();
+
+    statusEl.textContent = `✔ Found ${items.length} device${items.length === 1 ? '' : 's'}, added to form.`;
+    statusEl.className = 'field-status ok';
+  } catch(err){
+    statusEl.innerHTML = 'Lookup failed — ' + escapeHtml(err.message) +
+      ' <button type="button" class="btn btn-ghost retry-inline-btn" id="retryLookupBtn">↻ Retry</button>';
+    statusEl.className = 'field-status err';
+    const retryBtn = document.getElementById('retryLookupBtn');
+    if (retryBtn) retryBtn.addEventListener('click', lookupByOwner);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+document.getElementById('lookupByOwnerBtn').addEventListener('click', lookupByOwner);
+document.getElementById('ownerEmail').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter'){ e.preventDefault(); lookupByOwner(); }
+});
+
+document.getElementById('printBtn').addEventListener('click', async () => {
+  const btn = document.getElementById('printBtn');
+  btn.disabled = true;
+  try{
+    const pdf = await generateFormPdfDoc();
+    if (typeof pdf.autoPrint === 'function') pdf.autoPrint();
+    const blobUrl = pdf.output('bloburl');
+    const printWin = window.open(blobUrl, '_blank');
+    if (!printWin){
+      alert('Your browser blocked the print preview pop-up. Please allow pop-ups for this site and try again.');
+    }
+  } catch(err){
+    alert('Could not generate the print preview — ' + err.message);
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+/* ================= SAVE PDF TO SHAREPOINT (ITERF - Drafts) ================= */
+/* Renders the .page element to a canvas, builds an A4 PDF from it (paginating
+   if the content runs longer than one page), and POSTs the base64 PDF to the
+   configured Power Automate flow, which writes it into the ITERF - Drafts
+   list at CONFIG.draftsSiteUrl. Only the Step 4 review/print panel is shown
+   while the canvas is captured, so the PDF matches the printed layout. */
+/* Builds the jsPDF document object from the current Step 4 content. This is
+   the single source of truth for "what the ITERF PDF looks like" — both the
+   Print button and the Save-to-SharePoint button call this same function, so
+   the printed copy and the SharePoint copy are always identical.
+
+   PAGINATION STRATEGY — read this before touching the slicing logic below.
+   html2canvas gives us one tall flat screenshot of the whole document; there
+   is no way to ask it to "start a new PDF page here" mid-render. The old
+   version of this function cut that screenshot into equal fixed-height
+   chunks (one A4 page's worth of pixels each), with zero awareness of what
+   was actually AT that pixel row — so a cut could, and did, land in the
+   middle of a card, a table row, or a signature line.
+
+   The fix measures the real on-screen position (getBoundingClientRect) of
+   every "don't split me" element — each .card as a whole, and each
+   Equipment Issued table row individually — BEFORE the screenshot is taken,
+   converts those into canvas-pixel coordinates, and then walks down the
+   image choosing each page-break point to fall in the whitespace between
+   two of those elements rather than through one. If a natural break would
+   land inside an atomic element, the cut is pulled back to just before that
+   element instead, and that element starts fresh on the next page.
+   The equipment table is deliberately NOT treated as one atomic block (it
+   can legitimately be too tall for one page) — its individual rows are, so
+   the table can span pages while keeping every row intact, and its <thead>
+   is captured separately so it can be redrawn at the top of any page the
+   table continues onto.
+
+   HEADER / FOOTER — the branded .header block is cropped out of the
+   screenshot ONCE and redrawn at the top of every page; the .print-footer
+   element is hidden entirely during the screenshot and instead drawn fresh
+   with jsPDF's own text/line APIs, pinned to a fixed band at the bottom of
+   every page (company info + "Page X of Y"), so it never just trails off
+   after the last card on whichever page happens to end the content. Content
+   height per page is reduced by the header/footer bands so nothing overlaps. */
+async function generateFormPdfDoc(){
+  const page = document.querySelector('.page');
+  const headerEl = document.querySelector('.header');
+  const footerEl = document.querySelector('.print-footer');
+  const hidden = Array.from(document.querySelectorAll('.no-print'));
+  const otherSteps = Array.from(document.querySelectorAll('.step-panel:not(#step4)'));
+  hidden.forEach(el => { el.dataset.prevDisplay = el.style.display; el.style.display = 'none'; });
+  otherSteps.forEach(el => { el.dataset.prevDisplay = el.style.display; el.style.display = 'none'; });
+  // The footer is redrawn on every page by jsPDF itself (see the FOOTER step
+  // below) — hide the in-flow copy so it doesn't also show up once, floating
+  // after the last card, in the screenshot.
+  const footerText = footerEl ? footerEl.textContent.replace(/\s+/g, ' ').trim() : '';
+  if (footerEl){ footerEl.dataset.prevDisplay = footerEl.style.display; footerEl.style.display = 'none'; }
+
+  let pdf;
+  try{
+    /* ---- 1. Measure atomic ("never split") elements, and the header
+       block, while the DOM is still real elements, in CSS px relative to
+       the top of .page ---- */
+    const pageRect = page.getBoundingClientRect();
+    const boxOf = (el) => {
+      const r = el.getBoundingClientRect();
+      return { top: r.top - pageRect.top, bottom: r.bottom - pageRect.top };
+    };
+
+    const headerBox = headerEl ? boxOf(headerEl) : null;
+
+    const equipTable = document.getElementById('equipTablePrint');
+    const equipCard = equipTable ? equipTable.closest('.card') : null;
+    const atomicBoxes = [];
+
+    document.querySelectorAll('#step4 .card').forEach(card => {
+      if (card === equipCard) return; // handled row-by-row below instead of as one block
+      atomicBoxes.push(boxOf(card));
+    });
+
+    let tableMeta = null;
+    if (equipCard && equipTable){
+      const thead = equipTable.querySelector('thead');
+      const rows = Array.from(equipTable.querySelectorAll('tbody tr'));
+      const cardBox = boxOf(equipCard);
+      const theadBox = boxOf(thead);
+      const rowBoxes = rows.map(boxOf);
+      // Card title + subtitle + thead + first row travel together, so the
+      // table header is never left orphaned alone at the bottom of a page.
+      const firstBlockBottom = rowBoxes.length ? rowBoxes[0].bottom : theadBox.bottom;
+      atomicBoxes.push({ top: cardBox.top, bottom: firstBlockBottom });
+      rowBoxes.slice(1).forEach(b => atomicBoxes.push(b));
+      tableMeta = {
+        theadTop: theadBox.top,
+        theadBottom: theadBox.bottom,
+        bodyBottom: rowBoxes.length ? rowBoxes[rowBoxes.length - 1].bottom : theadBox.bottom
+      };
+    }
+    atomicBoxes.sort((a, b) => a.top - b.top);
+
+    /* ---- 2. Screenshot the whole document as one tall image ---- */
+    const canvas = await html2canvas(page, { scale: 2, backgroundColor: '#ffffff', useCORS: true });
+    const { jsPDF } = window.jspdf;
+    pdf = new jsPDF({ unit: 'mm', format: 'a4', compress: true });
+
+    // Tighter, near-full-page margins — content and header/footer bands
+    // below fill nearly the entire printable A4 area.
+    const PAGE_W_MM = pdf.internal.pageSize.getWidth();
+    const PAGE_H_MM = pdf.internal.pageSize.getHeight();
+    const MARGIN_TOP_MM = 9, MARGIN_BOTTOM_MM = 8, MARGIN_SIDE_MM = 11;
+    const HEADER_GAP_MM = 5;   // space between the repeated header and the content that follows it
+    const FOOTER_BAND_MM = 12; // reserved band at the bottom of every page: rule + company line + "Page X of Y"
+    const CONTENT_W_MM = PAGE_W_MM - (MARGIN_SIDE_MM * 2);
+
+    const pxPerCssPx = canvas.width / page.offsetWidth;      // matches the html2canvas scale option
+    const mmPerPx = CONTENT_W_MM / canvas.width;              // canvas px -> mm, at the printed content width
+    const toCanvasPx = (cssPx) => cssPx * pxPerCssPx;
+
+    // ---- Crop the branded header once; it's redrawn at the top of every page.
+    // The header's teal/navy accent bar is a ::after pseudo-element positioned
+    // 4px BELOW the header's own box (bottom:-4px), so it falls outside
+    // headerEl's own getBoundingClientRect() — pad the crop a few px past the
+    // header's bottom edge so that accent bar is captured too, not just left
+    // behind in the page-1 content flow. ----
+    const HEADER_ACCENT_BUFFER_PX = 8; // CSS px; comfortably covers the 4px bar plus anti-aliasing
+    let brandHeaderCrop = null, brandHeaderHPx = 0, brandHeaderHMM = 0;
+    let contentStartPx = 0;
+    if (headerBox){
+      const hTop = toCanvasPx(headerBox.top);
+      const hBottom = toCanvasPx(headerBox.bottom + HEADER_ACCENT_BUFFER_PX);
+      brandHeaderHPx = Math.ceil(hBottom - hTop);
+      brandHeaderCrop = document.createElement('canvas');
+      brandHeaderCrop.width = canvas.width;
+      brandHeaderCrop.height = brandHeaderHPx;
+      brandHeaderCrop.getContext('2d').drawImage(canvas, 0, hTop, canvas.width, hBottom - hTop, 0, 0, canvas.width, hBottom - hTop);
+      brandHeaderHMM = brandHeaderHPx * mmPerPx;
+      contentStartPx = hBottom; // page content in the screenshot begins right after the header
+    }
+
+    const contentTopMM = MARGIN_TOP_MM + brandHeaderHMM + HEADER_GAP_MM;
+    const CONTENT_H_MM = PAGE_H_MM - contentTopMM - FOOTER_BAND_MM - MARGIN_BOTTOM_MM;
+    const contentHeightPx = CONTENT_H_MM / mmPerPx;           // how many canvas px of content fit on one page
+
+    const atomicPx = atomicBoxes.map(b => ({ top: toCanvasPx(b.top), bottom: toCanvasPx(b.bottom) }));
+
+    // Crop of just the equipment table's <thead>, redrawn at the top of any
+    // page the table body continues onto (separate from the branded header above).
+    let theadCrop = null, theadCropH = 0;
+    let tableBodyTopPx = null, tableBodyBottomPx = null;
+    if (tableMeta){
+      const hTop = toCanvasPx(tableMeta.theadTop);
+      const hBottom = toCanvasPx(tableMeta.theadBottom);
+      theadCropH = Math.ceil(hBottom - hTop);
+      theadCrop = document.createElement('canvas');
+      theadCrop.width = canvas.width;
+      theadCrop.height = theadCropH;
+      theadCrop.getContext('2d').drawImage(canvas, 0, hTop, canvas.width, hBottom - hTop, 0, 0, canvas.width, hBottom - hTop);
+      tableBodyTopPx = toCanvasPx(tableMeta.theadBottom);
+      tableBodyBottomPx = toCanvasPx(tableMeta.bodyBottom);
+    }
+
+    /* ---- 3. Walk the image top to bottom (starting after the header),
+       choosing each page break just before whichever atomic element it
+       would otherwise land inside ----
+       totalH is capped at the bottom of the last real atomic element (the
+       last .card / table row), NOT the raw canvas height. canvas.height
+       also includes the .page element's own bottom padding and the last
+       card's trailing margin — pure whitespace, not content. Left
+       uncapped, that trailing whitespace gets treated as "content
+       remaining" whenever real content ends close to (but under) a page's
+       budget, which spins up a whole extra page containing nothing but
+       that whitespace (plus a sliver of the last card's border dragged
+       along as a stray line) — a blank trailing page with "no content". */
+    const lastContentBottomCss = atomicBoxes.length
+      ? Math.max(...atomicBoxes.map(b => b.bottom))
+      : (pageRect.bottom - pageRect.top);
+    const totalH = Math.min(canvas.height, Math.ceil(toCanvasPx(lastContentBottomCss)) + 8);
+    const slices = [];
+    let cursor = contentStartPx;
+    while (cursor < totalH - 0.5){
+      const continuesTable = tableMeta && cursor > tableBodyTopPx + 0.5 && cursor < tableBodyBottomPx - 0.5;
+      const budget = continuesTable ? Math.max(contentHeightPx - theadCropH, contentHeightPx * 0.25) : contentHeightPx;
+      let idealEnd = cursor + budget;
+
+      if (idealEnd >= totalH){
+        slices.push({ start: cursor, end: totalH, repeatTheadRow: continuesTable });
+        break;
+      }
+      const straddling = atomicPx.filter(b => b.top < idealEnd - 0.5 && b.bottom > idealEnd + 0.5 && b.top >= cursor - 0.5);
+      let cut = idealEnd;
+      if (straddling.length){
+        const earliestTop = Math.min(...straddling.map(b => b.top));
+        if (earliestTop > cursor + 1) cut = earliestTop;
+      }
+      if (cut <= cursor + 1) cut = idealEnd; // guard: never emit a zero-height page (e.g. one giant atomic block)
+      slices.push({ start: cursor, end: cut, repeatTheadRow: continuesTable });
+      cursor = cut;
+    }
+    if (!slices.length) slices.push({ start: contentStartPx, end: totalH, repeatTheadRow: false });
+
+    /* ---- 4. Render each slice as its own PDF page: branded header at the
+       top, content slice below it, footer band pinned to the bottom ---- */
+    slices.forEach((slice, i) => {
+      if (i > 0) pdf.addPage();
+
+      if (brandHeaderCrop){
+        pdf.addImage(brandHeaderCrop.toDataURL('image/png'), 'PNG', MARGIN_SIDE_MM, MARGIN_TOP_MM, CONTENT_W_MM, brandHeaderHMM);
+      }
+
+      const bodyH = slice.end - slice.start;
+      let out;
+      if (slice.repeatTheadRow && theadCrop){
+        out = document.createElement('canvas');
+        out.width = canvas.width;
+        out.height = Math.ceil(theadCropH + bodyH);
+        const ctx = out.getContext('2d');
+        ctx.drawImage(theadCrop, 0, 0);
+        ctx.drawImage(canvas, 0, slice.start, canvas.width, bodyH, 0, theadCropH, canvas.width, bodyH);
+      } else {
+        out = document.createElement('canvas');
+        out.width = canvas.width;
+        out.height = Math.ceil(bodyH);
+        out.getContext('2d').drawImage(canvas, 0, slice.start, canvas.width, bodyH, 0, 0, canvas.width, bodyH);
+      }
+      // PNG (lossless) instead of JPEG here — JPEG's block compression was
+      // leaving a faint gray seam exactly at each slice's cut edge on solid
+      // white/light backgrounds, which showed up as a stray horizontal line
+      // near the bottom of the content on some pages.
+      const dataUrl = out.toDataURL('image/png');
+      pdf.addImage(dataUrl, 'PNG', MARGIN_SIDE_MM, contentTopMM, CONTENT_W_MM, out.height * mmPerPx);
+
+      // ---- FOOTER: fixed band at the bottom of every page, regardless of content length ----
+      const footerTopY = PAGE_H_MM - MARGIN_BOTTOM_MM - FOOTER_BAND_MM;
+      if (footerText){
+        pdf.setFont('helvetica', 'normal');
+        pdf.setFontSize(8);
+        pdf.setTextColor(91, 100, 114);
+        pdf.text(footerText, PAGE_W_MM / 2, footerTopY + 5, { align: 'center' });
+      }
+      pdf.setFont('helvetica', 'normal');
+      pdf.setFontSize(7.5);
+      pdf.setTextColor(120, 130, 140);
+      pdf.text('Page ' + (i + 1) + ' of ' + slices.length, PAGE_W_MM / 2, footerTopY + (footerText ? 9 : 5), { align: 'center' });
+    });
+  } finally {
+    hidden.forEach(el => { el.style.display = el.dataset.prevDisplay || ''; });
+    otherSteps.forEach(el => { el.style.display = el.dataset.prevDisplay || ''; });
+    if (footerEl) footerEl.style.display = footerEl.dataset.prevDisplay || '';
+  }
+  return pdf;
+}
+
+/* Thin wrapper around generateFormPdfDoc() for callers (Save to SharePoint)
+   that need the raw base64 bytes instead of the jsPDF object. */
+async function generateFormPdfBase64(){
+  const pdf = await generateFormPdfDoc();
+  const dataUri = pdf.output('datauristring');
+  return dataUri.split(',')[1];
+}
+
+/* Tracks whether "Save" has succeeded at least once in this session, so
+   "Send" can warn if someone tries to email a copy that was never actually
+   saved to SharePoint. Resets automatically if a brand new form is started. */
+let savedThisSession = false;
+
+/* Shared by "Save" and "Send" — the only difference is the `action` field
+   sent to the Power Automate flow: "save" (write the PDF to SharePoint, no
+   email) or "send" (email the PDF, DO NOT touch SharePoint at all). Keeping
+   these as two distinct actions — instead of one combined "save-and-email"
+   call — is what stops Send from ever creating a second, duplicate
+   SharePoint entry for the same form. See CONFIG.saveDraftUrl comments for
+   the matching change needed on the Power Automate flow side. */
+async function runSaveOrSend(action){
+  const isSend = action === 'send';
+  const triggerBtn = document.getElementById(isSend ? 'sendEmailBtn' : 'saveSharePointBtn');
+  const otherBtn = document.getElementById(isSend ? 'saveSharePointBtn' : 'sendEmailBtn');
+  const statusEl = document.getElementById('saveDraftStatus');
+
+  if (!CONFIG.saveDraftUrl){
+    statusEl.textContent = 'SAVE NOT CONFIGURED — add the Power Automate flow URL to CONFIG.saveDraftUrl (target: ' + CONFIG.draftsListName + ' at ' + CONFIG.draftsSiteUrl + ')';
+    statusEl.className = 'lookup-summary err';
+    return;
+  }
+
+  const empName = document.getElementById('empName').value.trim() || 'Unnamed';
+  const employeeEmail = document.getElementById('ownerEmail').value.trim();
+
+  if (isSend){
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(employeeEmail)){
+      statusEl.textContent = 'Enter a valid employee email in "Employee Email (Current Owner)" on Step 1 before using Send.';
+      statusEl.className = 'lookup-summary err';
+      return;
+    }
+    if (!savedThisSession){
+      statusEl.textContent = 'Save this form to SharePoint before sending — the Send button unlocks after a successful Save.';
+      statusEl.className = 'lookup-summary err no-print';
+      return;
+    }
+  }
+
+  const formRef = document.getElementById('formRef').textContent.trim();
+  const fileName = `ITERF_${empName.replace(/[^a-z0-9]+/gi,'_')}_${formRef}.pdf`;
+
+  triggerBtn.disabled = true;
+  otherBtn.disabled = true;
+  statusEl.textContent = '';
+  statusEl.className = 'lookup-summary no-print';
+
+  try{
+    const fileContentBase64 = await generateFormPdfBase64();
+
+    statusEl.textContent = isSend
+      ? `Emailing a copy to ${employeeEmail}…`
+      : 'Saving to SharePoint (' + CONFIG.draftsListName + ')…';
+    statusEl.className = 'lookup-summary warn no-print';
+
+    const res = await fetch(CONFIG.saveDraftUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action,
+        fileName,
+        fileContentBase64,
+        employeeName: empName,
+        jobPosition: document.getElementById('empPosition').value.trim(),
+        department: document.getElementById('empDepartment').value.trim(),
+        startDate: document.getElementById('empStartDate').value,
+        remarks: document.getElementById('itRemarks').value.trim(),
+        formRef,
+        siteUrl: CONFIG.draftsSiteUrl,
+        listName: CONFIG.draftsListName,
+        employeeEmail: employeeEmail,
+        ccEmail: isSend ? CONFIG.itDeptEmail : ''
+      })
+    });
+
+    if (!res.ok) throw new Error('Flow request failed (HTTP ' + res.status + ')');
+
+    if (isSend){
+      statusEl.textContent = `✔ Emailed a copy of "${fileName}" to ${employeeEmail} (cc ${CONFIG.itDeptEmail}).`;
+    } else {
+      savedThisSession = true;
+      document.getElementById('sendEmailBtn').disabled = false;
+      document.getElementById('sendEmailBtn').removeAttribute('title');
+      statusEl.textContent = `✔ Saved "${fileName}" to ${CONFIG.draftsListName}.`;
+    }
+    statusEl.className = 'lookup-summary ok no-print';
+  } catch(err){
+    statusEl.textContent = (isSend ? 'Send failed — ' : 'Save failed — ') + err.message;
+    statusEl.className = 'lookup-summary err no-print';
+  } finally {
+    triggerBtn.disabled = false;
+    otherBtn.disabled = false;
+  }
+}
+
+document.getElementById('saveSharePointBtn').addEventListener('click', () => runSaveOrSend('save'));
+document.getElementById('sendEmailBtn').addEventListener('click', () => runSaveOrSend('send'));
+
+document.getElementById('clearBtn').addEventListener('click', () => {
+  if (!confirm('Clear all fields on this form?')) return;
+  ['empName','empPosition','empDepartment','empStartDate','itRemarks'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('ownerEmail').value = '';
+  document.getElementById('ownerStatus').textContent = '';
+  document.getElementById('ownerStatus').className = 'field-status';
+  clearEquipment();
+  renderEquipTable();
+});
+
+/* Starts a brand new release form after a completed transaction — clears
+   every field, wipes both signature names, gives the form a fresh
+   Form Ref / date, and returns to Step 1. */
+function startNewForm(){
+  if (!confirm('Start a new form? This clears everything from the current transaction.')) return;
+
+  ['empName','empPosition','empDepartment','empStartDate','itRemarks'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('ownerEmail').value = '';
+  document.getElementById('ownerStatus').textContent = '';
+  document.getElementById('ownerStatus').className = 'field-status';
+  clearEquipment();
+  renderEquipTable();
+
+  const empSigEl = document.getElementById('empSigName');
+  if (empSigEl) empSigEl.textContent = '\u00A0';
+  const staffSigEl = document.getElementById('itStaffSigName');
+  if (staffSigEl) staffSigEl.textContent = '\u00A0';
+
+  const saveStatusEl = document.getElementById('saveDraftStatus');
+  if (saveStatusEl){ saveStatusEl.textContent = ''; saveStatusEl.className = 'lookup-summary no-print'; }
+
+  generateFormRef();
+  savedThisSession = false;
+  const sendBtn = document.getElementById('sendEmailBtn');
+  sendBtn.disabled = true;
+  sendBtn.title = 'Save to SharePoint first';
+  showStep(1);
+}
+
+document.getElementById('newFormBtn').addEventListener('click', startNewForm);
+
+/* ================= STEP NAVIGATION (4-page wizard) ================= */
+let currentStep = 1;
+
+function showStep(n){
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('step' + n).classList.add('active');
+
+  document.querySelectorAll('.step-item').forEach(item => {
+    const s = parseInt(item.dataset.step, 10);
+    item.classList.toggle('current', s === n);
+    item.classList.toggle('done', s < n);
+    item.classList.toggle('clickable', s < n);
+  });
+
+  currentStep = n;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* Copies the current input values into the plain-text Step 4 review, since
+   the printed document shows read-only text rather than form fields. */
+function populateReview(){
+  const setReview = (id, value) => {
+    const el = document.getElementById(id);
+    if (value){ el.textContent = value; el.classList.remove('empty'); }
+    else { el.textContent = 'Not provided'; el.classList.add('empty'); }
+  };
+  setReview('reviewName', document.getElementById('empName').value.trim());
+  setReview('reviewPosition', document.getElementById('empPosition').value.trim());
+  setReview('reviewDepartment', document.getElementById('empDepartment').value.trim());
+  setReview('reviewStartDate', formatDateVal(document.getElementById('empStartDate').value));
+
+  const remarksEl = document.getElementById('reviewRemarks');
+  const remarksVal = document.getElementById('itRemarks').value.trim();
+  if (remarksVal){ remarksEl.textContent = remarksVal; remarksEl.classList.remove('empty'); }
+  else { remarksEl.textContent = 'No remarks noted.'; remarksEl.classList.add('empty'); }
+
+  const empSigEl = document.getElementById('empSigName');
+  if (empSigEl){
+    const empNameVal = document.getElementById('empName').value.trim();
+    empSigEl.textContent = empNameVal || '\u00A0';
+  }
+
+  const sigEl = document.getElementById('itStaffSigName');
+  if (sigEl && currentStaff){
+    const today = new Date().toLocaleDateString(undefined, { year:'numeric', month:'long', day:'numeric' });
+    sigEl.textContent = currentStaff.name + '  —  ' + today;
+  }
+}
+
+document.getElementById('toStep2Btn').addEventListener('click', () => {
+  if (!Object.keys(equipmentItems).length){
+    alert('No equipment has been added yet. Add at least one equipment item (via Find Equipment or manual entry) before proceeding.');
+    return;
+  }
+  showStep(2);
+});
+
+document.getElementById('backToStep1Btn').addEventListener('click', () => showStep(1));
+
+document.getElementById('toStep3Btn').addEventListener('click', () => showStep(3));
+
+document.getElementById('backToStep2Btn').addEventListener('click', () => showStep(2));
+
+document.getElementById('toStep4Btn').addEventListener('click', () => {
+  const nameEl = document.getElementById('empName');
+  if (!nameEl.value.trim()){
+    alert('Please enter the employee\'s full name before continuing.');
+    nameEl.focus();
+    return;
+  }
+  populateReview();
+  showStep(4);
+});
+
+document.getElementById('backToStep3Btn').addEventListener('click', () => showStep(3));
+
+// Allow jumping back to any already-completed step by clicking its circle.
+document.getElementById('stepper').addEventListener('click', (e) => {
+  const item = e.target.closest('.step-item');
+  if (!item || !item.classList.contains('clickable')) return;
+  showStep(parseInt(item.dataset.step, 10));
+});
+
+/* ================= AUTH — Microsoft sign-in + hardcoded approved-staff list ================= */
+let msalInstance = null;
+let msalReady = false;
+let currentAccount = null;
+let currentStaff = null; // { email, name, role }
+
+async function initAuth(){
+  const statusEl = document.getElementById('authStatus');
+
+  if (!window.msal){
+    statusEl.textContent = 'Sign-in library failed to load — check your internet connection and refresh.';
+    statusEl.className = 'field-status err';
+    return;
+  }
+  if (!CONFIG.aad.clientId || CONFIG.aad.clientId.startsWith('REPLACE')){
+    statusEl.textContent = 'SIGN-IN NOT CONFIGURED YET — an admin needs to add the Azure AD App Client ID and Tenant ID to CONFIG.aad (see the setup comment above CONFIG.aad in the code).';
+    statusEl.className = 'field-status err';
+    return;
+  }
+
+  msalInstance = new msal.PublicClientApplication({
+    auth: {
+      clientId: CONFIG.aad.clientId,
+      authority: 'https://login.microsoftonline.com/' + CONFIG.aad.tenantId,
+      // Popup sign-in must redirect to a dedicated blank page, NOT the
+      // full app — otherwise the popup reloads this whole page/script
+      // a second time inside itself and MSAL throws
+      // "uninitialized_public_client_application". blank.html must be
+      // deployed alongside this file and registered as an additional
+      // SPA Redirect URI in Entra ID.
+      redirectUri: window.location.origin + '/blank.html',
+      postLogoutRedirectUri: window.location.href.split('#')[0].split('?')[0]
+    },
+    cache: { cacheLocation: 'sessionStorage', storeAuthStateInCookie: false }
+  });
+
+  // MSAL v3+ requires this to be awaited before any other MSAL API is used.
+  try{
+    await msalInstance.initialize();
+  } catch(err){
+    statusEl.textContent = 'Sign-in library failed to initialize — ' + err.message;
+    statusEl.className = 'field-status err';
+    return;
+  }
+  msalReady = true;
+
+  const accounts = msalInstance.getAllAccounts();
+  if (accounts.length){
+    currentAccount = accounts[0];
+    checkAuthorizationAndSignIn();
+  }
+}
+
+async function signIn(){
+  const statusEl = document.getElementById('authStatus');
+  if (!msalInstance || !msalReady){
+    statusEl.textContent = 'Sign-in is still starting up — wait a moment and try again.';
+    statusEl.className = 'field-status err';
+    return;
+  }
+  statusEl.textContent = '';
+  statusEl.className = 'field-status';
+  try{
+    const result = await msalInstance.loginPopup({ scopes: ['User.Read'] });
+    currentAccount = result.account;
+    checkAuthorizationAndSignIn();
+  } catch(err){
+    statusEl.textContent = 'Sign-in failed — ' + err.message;
+    statusEl.className = 'field-status err';
+  }
+}
+
+function signOut(){
+  if (!msalInstance || !currentAccount) return;
+  msalInstance.logoutPopup({ account: currentAccount }).finally(() => window.location.reload());
+}
+
+document.getElementById('signInBtn').addEventListener('click', signIn);
+document.getElementById('signOutLink').addEventListener('click', (e) => { e.preventDefault(); signOut(); });
+
+function findApprovedStaff(email){
+  return CONFIG.approvedStaff.find(s => s.email.toLowerCase() === email) || null;
+}
+
+function checkAuthorizationAndSignIn(){
+  const statusEl = document.getElementById('authStatus');
+  const email = (currentAccount.username || '').toLowerCase();
+  const name = currentAccount.name || email;
+
+  const match = findApprovedStaff(email);
+  if (!match){
+    const superAdmin = CONFIG.approvedStaff.find(s => s.role === 'superadmin');
+    statusEl.textContent = `Signed in as ${name}, but this account is not on the approved IT staff list.` + (superAdmin ? ` Contact ${superAdmin.email} to be added.` : '');
+    statusEl.className = 'field-status err';
+    document.getElementById('signInBtn').style.display = 'none';
+    return;
+  }
+
+  handleSignedIn(match);
+}
+
+function renderStaffTable(){
+  const body = document.getElementById('staffTableBody');
+  if (!body) return;
+  body.innerHTML = CONFIG.approvedStaff.map(s => `
+    <tr>
+      <td>${escapeHtml(s.name)}</td>
+      <td class="assetid">${escapeHtml(s.email)}</td>
+      <td>${s.role === 'superadmin' ? 'Super admin' : 'Normal user'}</td>
+      <td><button type="button" class="btn btn-ghost remove-staff-btn" data-email="${escapeHtml(s.email)}">🗑 Remove</button></td>
+    </tr>
+  `).join('');
+}
+
+/* Removes a staff member from the in-memory approved list (after a
+   confirmation prompt) and updates the table immediately. Since this list is
+   hardcoded in the page rather than backed by a live database (see the note
+   above the Manage Users table), the removal only takes effect here in the
+   browser until an admin deletes the matching line from CONFIG.approvedStaff
+   in the HTML file and re-deploys — mirroring how "add" already works. */
+function removeStaff(email){
+  const staff = findApprovedStaff(email);
+  if (!staff) return;
+
+  const remainingSuperAdmins = CONFIG.approvedStaff.filter(s => s.role === 'superadmin' && s.email.toLowerCase() !== staff.email.toLowerCase());
+  if (staff.role === 'superadmin' && remainingSuperAdmins.length === 0){
+    alert('Cannot remove the only super admin on the list — add another super admin first.');
+    return;
+  }
+
+  const confirmed = window.confirm(`Remove ${staff.name} (${staff.email}) from the approved staff list?\n\nThis cannot be undone.`);
+  if (!confirmed) return;
+
+  CONFIG.approvedStaff = CONFIG.approvedStaff.filter(s => s.email.toLowerCase() !== staff.email.toLowerCase());
+  renderStaffTable();
+
+  const statusEl = document.getElementById('addStaffStatus');
+  const snippetEl = document.getElementById('addStaffSnippet');
+  statusEl.textContent = `${staff.name} (${staff.email}) removed from the list shown here. To make this permanent, delete their line from CONFIG.approvedStaff in the HTML file, save, and re-deploy to Netlify.`;
+  statusEl.className = 'field-status ok';
+  snippetEl.textContent = `    { email: "${staff.email}", name: "${staff.name}", role: "${staff.role}" },  // ← delete this line from CONFIG.approvedStaff`;
+  snippetEl.style.display = 'block';
+}
+
+document.getElementById('staffTableBody').addEventListener('click', (e) => {
+  const btn = e.target.closest('.remove-staff-btn');
+  if (!btn) return;
+  removeStaff(btn.dataset.email);
+});
+
+function handleSignedIn(match){
+  const isSuperAdmin = match.role === 'superadmin';
+  currentStaff = { email: match.email, name: match.name, role: match.role };
+
+  document.getElementById('authGate').style.display = 'none';
+  document.getElementById('appContent').style.display = '';
+  document.getElementById('signedInRow').style.display = '';
+  document.getElementById('signedInName').textContent = match.name + (isSuperAdmin ? ' (Admin)' : '');
+  if (isSuperAdmin){
+    document.getElementById('mainMenu').style.display = 'flex';
+    renderStaffTable();
+  }
+
+  applyBranding();
+  checkConnection();
+  renderEquipTable();
+  showStep(1);
+  showView('form');
+}
+
+/* ================= MENU — switch between Print Form and Manage Users ================= */
+function showView(view){
+  const isForm = view === 'form';
+  document.getElementById('printFormView').style.display = isForm ? '' : 'none';
+  document.getElementById('manageUsersView').style.display = isForm ? 'none' : '';
+  document.getElementById('menuPrintFormBtn').classList.toggle('active', isForm);
+  document.getElementById('menuManageUsersBtn').classList.toggle('active', !isForm);
+  if (!isForm) renderStaffTable();
+}
+
+document.getElementById('menuPrintFormBtn').addEventListener('click', () => showView('form'));
+document.getElementById('menuManageUsersBtn').addEventListener('click', () => showView('users'));
+
+/* ================= ADMIN — generate a copy-paste line for CONFIG.approvedStaff ================= */
+function addStaff(){
+  const emailEl = document.getElementById('newStaffEmail');
+  const nameEl = document.getElementById('newStaffName');
+  const roleEl = document.getElementById('newStaffRole');
+  const statusEl = document.getElementById('addStaffStatus');
+  const snippetEl = document.getElementById('addStaffSnippet');
+  const email = emailEl.value.trim().toLowerCase();
+  const name = nameEl.value.trim();
+  const role = roleEl.value;
+
+  if (!email || !name){
+    statusEl.textContent = 'Enter both an email and a display name first.';
+    statusEl.className = 'field-status err';
+    snippetEl.style.display = 'none';
+    return;
+  }
+  if (findApprovedStaff(email)){
+    statusEl.textContent = `${email} is already on the list.`;
+    statusEl.className = 'field-status err';
+    snippetEl.style.display = 'none';
+    return;
+  }
+
+  const line = `    { email: "${email}", name: "${name}", role: "${role}" },`;
+  snippetEl.textContent = line;
+  snippetEl.style.display = 'block';
+  statusEl.textContent = 'Copy this line, paste it into CONFIG.approvedStaff in the HTML file (above the closing bracket), save, and re-deploy to Netlify.';
+  statusEl.className = 'field-status ok';
+}
+
+document.getElementById('addStaffBtn').addEventListener('click', addStaff);
+
+/* ================= START ================= */
+initAuth();
+</script>
+
+</body>
+</html>
